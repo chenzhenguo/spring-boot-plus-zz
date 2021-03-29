@@ -1,0 +1,90 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+#if(${cfg.generatorPageParam})
+import ${cfg.pageParamClass};
+#end
+#if(${cfg.generatorQueryVo})
+import ${cfg.queryVoClass};
+#end
+#if(${cfg.generatorStrategy} == 'SINGLE')
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+#end
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
+#end
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends BaseService<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    private ${table.mapperName} ${cfg.mapperObjectName};
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+
+    @Override
+    public boolean save${entity}(${entity} ${cfg.entityObjectName})   {
+        return this.save(${cfg.entityObjectName});
+    }
+
+    @Override
+    public boolean update${entity}(${entity} ${cfg.entityObjectName})   {
+        return this.updateById(${cfg.entityObjectName});
+    }
+
+    @Override
+    public boolean delete${entity}(String sid)   {
+             ${entity}${cfg.queryVo}  obj =this.getById(sid);
+             if(null != obj){
+                 obj.setScbj(1);
+            }
+        return this.saveOrUpdate(zy);
+    }
+
+    @Override
+    public boolean delBatch${entity}(List<String> sids)   {
+        List<${entity}${cfg.queryVo}> list = new ArrayList<>(16);
+        for(String sid:sids){
+         ${entity}${cfg.queryVo} obj = this.getById(sid);
+            if(obj !=null){
+                obj.setScbj(1);
+                list.add(obj);
+            }
+        }
+        return this.saveOrUpdateBatch(list);
+
+    }
+
+    #if(${cfg.generatorStrategy} != 'SINGLE')
+    @Override
+    public ${entity}${cfg.queryVo} get${entity}ById(String sid)   {
+         return ${cfg.mapperObjectName}.get${entity}ById(id);
+    }
+
+    #end
+@Override
+public Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
+        Page<${entity}${cfg.queryVo}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getGxsj)));
+    #if(${cfg.generatorStrategy} != 'SINGLE')
+            IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
+    #else
+            LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
+            IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
+    #end
+        return new Paging<${entity}${cfg.queryVo}>(iPage);
+        }
+#end
+}

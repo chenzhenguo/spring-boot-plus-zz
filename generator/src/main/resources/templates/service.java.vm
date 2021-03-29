@@ -1,0 +1,72 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+#if(${cfg.generatorPageParam})
+import ${cfg.pageParamClass};
+#end
+#if(${cfg.generatorQueryVo})
+import ${cfg.queryVoClass};
+#end
+
+
+/**
+ * $!{table.comment} 服务类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceName} extends IBaseService<${entity}> {
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+
+    /**
+     * 保存
+     *
+     * @param ${cfg.entityObjectName}
+     * @return
+     */
+    boolean save${entity}(${entity} ${cfg.entityObjectName})  ;
+
+    /**
+     * 修改
+     *
+     * @param ${cfg.entityObjectName}
+     * @return
+     */
+    boolean update${entity}(${entity} ${cfg.entityObjectName})  ;
+
+    /**
+     * 删除
+     *
+     * @param sid
+     * @return
+     */
+        boolean  delete${entity}(String sid);
+
+    /**
+     * 批量删除
+     *
+     * @param sids
+     * @return
+     */
+    boolean delBatch${entity}(List<String>  sids);
+
+    #if(${cfg.generatorStrategy} != 'SINGLE')
+
+    /**
+     * 根据ID获取查询对象
+     *
+     * @param sid
+     * @return
+     */
+    ${entity}${cfg.queryVo} get${entity}ById(String  sid)  ;
+    #end
+    /**
+     * 获取分页对象
+     *
+     * @param  ${cfg.entityObjectName}${cfg.pageParam}
+     * @return
+     */
+      Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})  ;
+#end
+
+}
