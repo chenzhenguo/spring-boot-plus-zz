@@ -49,25 +49,22 @@ public class SpringBootPlusGenerator {
         // 设置基本信息
         generatorProperties
                 .setMavenModuleName("example")
-                .setParentPackage("com.zz.project.provide.yy")
+                .setParentPackage("com.zz.project.provide.usermanager")
                 .setAuthor("czg")
                 .setFileOverride(true);
         // 设置表信息
-        generatorProperties.addTable("sys_post","post_id");
+        generatorProperties.addTable("zz_persona_info","sid");
         // 设置表前缀
-      //   generatorProperties.setTablePrefix(Arrays.asList("zz_"));
+         generatorProperties.setTablePrefix(Arrays.asList("zz_"));
 
         // 数据源配置
         generatorProperties.getDataSourceConfig()
-                .setDbType(DbType.MYSQL)
-                .setUsername("root")
-                .setPassword("root")
-                .setDriverName("com.mysql.jdbc.Driver")
-
-//                .setDriverName("org.postgresql.Driver")
-//                .setSchemaName("zzgtkjjcxxpt_dev")
-                .setUrl("jdbc:mysql://localhost:3306/ry?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
-             //   .setUrl("jdbc:postgresql://192.168.16.48:5432/postgres?searchpath=zzgtkjjcxxpt_dev&stringtype=unspecified&tSchema=zzgtkjjcxxpt_dev");
+                .setDbType(DbType.POSTGRE_SQL)
+                .setUsername("postgres")
+                .setPassword("zzsoft")
+                .setDriverName("org.postgresql.Driver")
+               .setSchemaName("innovation_platform")
+               .setUrl("jdbc:postgresql://192.168.16.48:5432/postgres?searchpath=innovation_platform&stringtype=unspecified&tSchema=innovation_platform");
 
         // 生成配置
         generatorProperties.getGeneratorConfig()
