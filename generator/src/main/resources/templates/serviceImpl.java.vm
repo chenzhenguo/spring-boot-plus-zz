@@ -51,14 +51,14 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
              if(null != obj){
                  obj.setScbj(1);
             }
-        return this.saveOrUpdate(zy);
+        return this.saveOrUpdate(obj;
     }
 
     @Override
     public boolean delBatch${entity}(List<String> sids)   {
-        List<${entity}${cfg.queryVo}> list = new ArrayList<>(16);
+        List<${entity}> list = new ArrayList<>(16);
         for(String sid:sids){
-         ${entity}${cfg.queryVo} obj = this.getById(sid);
+         ${entity} obj = this.getById(sid);
             if(obj !=null){
                 obj.setScbj(1);
                 list.add(obj);
@@ -70,8 +70,8 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
 
     #if(${cfg.generatorStrategy} != 'SINGLE')
     @Override
-    public ${entity}${cfg.queryVo} get${entity}ById(String sid)   {
-         return ${cfg.mapperObjectName}.get${entity}ById(id);
+    public ${entity} get${entity}ById(String sid)   {
+         return ${cfg.mapperObjectName}.get${entity}ById(sid);
     }
 
     #end
