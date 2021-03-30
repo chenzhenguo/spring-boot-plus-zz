@@ -127,8 +127,8 @@ public class ${table.controllerName} {
 #if(${cfg.operationLog})
    @Log(modelName = "$!{table.comment}详情", action = Log.SELECT,description="根据id查询$!{table.comment}")
 #end
-    @ApiOperation(value = "$!{table.comment}详情", response = ${entity}${cfg.queryVo}.class)
-    public ${entity}${cfg.queryVo} getById${entity}( String id)   {
+    @ApiOperation(value = "$!{table.comment}详情", response = ${entity}.class)
+    public ${entity} getById${entity}( String id)   {
 #if(${cfg.generatorStrategy} == 'SINGLE')
         return    ${cfg.serviceObjectName}.getById(id);
 #else
@@ -146,8 +146,8 @@ public class ${table.controllerName} {
 #if(${cfg.operationLog})
        @Log(modelName = "$!{table.comment}分页列表", action = Log.SELECT,description="分页查询查询$!{table.comment}")
 #end
-    @ApiOperation(value = "$!{table.comment}分页列表", response = ${entity}${cfg.queryVo}.class)
-    public Paging<${entity}${cfg.queryVo}> get${entity}PageList( ${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
+    @ApiOperation(value = "$!{table.comment}分页列表", response = ${entity}.class)
+    public Paging<${entity}> get${entity}PageList( ${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
         return ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}${cfg.pageParam});
     }
 #end

@@ -51,7 +51,7 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
              if(null != obj){
                  obj.setScbj(1);
             }
-        return this.saveOrUpdate(obj;
+        return this.saveOrUpdate(obj);
     }
 
     @Override
