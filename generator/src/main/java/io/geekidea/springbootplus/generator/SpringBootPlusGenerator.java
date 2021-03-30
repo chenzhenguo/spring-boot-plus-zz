@@ -53,7 +53,7 @@ public class SpringBootPlusGenerator {
                 .setAuthor("czg")
                 .setFileOverride(true);
         // 设置表信息
-        generatorProperties.addTable("zz_persona_info","sid");
+        generatorProperties.addTable("zz_experts","sid");
         // 设置表前缀
          generatorProperties.setTablePrefix(Arrays.asList("zz_"));
 

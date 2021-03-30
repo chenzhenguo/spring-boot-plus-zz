@@ -35,13 +35,13 @@
         ${table.fieldNames}
     </sql>
 
-    <select id="get${entity}ById" resultType="${cfg.entity}">
+    <select id="get${entity}ById" resultType="${package.Entity}.${entity}">
         select
         <include refid="Base_Column_List"/>
         from ${table.name} where ${cfg.pkIdName} = #{id}
     </select>
 
-    <select id="get${entity}PageList" parameterType="${cfg.pageParamClass}" resultType="${cfg.entity}">
+    <select id="get${entity}PageList" parameterType="${cfg.pageParamClass}" resultType="${package.Entity}.${entity}">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}

@@ -58,7 +58,7 @@ public interface ${table.serviceName} extends IBaseService<${entity}> {
      * @param sid
      * @return
      */
-    ${entity}${cfg.queryVo} get${entity}ById(String  sid)  ;
+    ${entity} get${entity}ById(String  sid)  ;
     #end
     /**
      * 获取分页对象
@@ -66,7 +66,7 @@ public interface ${table.serviceName} extends IBaseService<${entity}> {
      * @param  ${cfg.entityObjectName}${cfg.pageParam}
      * @return
      */
-      Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})  ;
+      Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})  ;
 #end
 
 }

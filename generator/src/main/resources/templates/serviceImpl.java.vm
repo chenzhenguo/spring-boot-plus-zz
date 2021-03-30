@@ -47,7 +47,7 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
 
     @Override
     public boolean delete${entity}(String sid)   {
-             ${entity}${cfg.queryVo}  obj =this.getById(sid);
+             ${entity}  obj =this.getById(sid);
              if(null != obj){
                  obj.setScbj(1);
             }
@@ -76,15 +76,15 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
 
     #end
 @Override
-public Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
-        Page<${entity}${cfg.queryVo}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getGxsj)));
+public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
+        Page<${entity}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getGxsj)));
     #if(${cfg.generatorStrategy} != 'SINGLE')
-            IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
+            IPage<${entity}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
     #else
             LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
-            IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
+            IPage<${entity}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
     #end
-        return new Paging<${entity}${cfg.queryVo}>(iPage);
+        return new Paging<${entity}>(iPage);
         }
 #end
 }

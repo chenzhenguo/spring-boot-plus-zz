@@ -41,7 +41,7 @@ public interface GeneratorConstant {
     /**
      * mapper目录 src/main/resources/mapper
      */
-    String MAPPER_DIR =  File.separator + "src" + File.separator + "main"  + File.separator + "java"  + File.separator +"com"+File.separator + "zz"+File.separator + "project"+File.separator+"provide"+File.separator+"bz"+File.separator+"mapper";
+    String MAPPER_DIR =  RESOURCES_DIR + File.separator + "mapper";
 
     String PARAM = "param";
     /**
