@@ -87,7 +87,15 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
     #if(${cfg.generatorStrategy} != 'SINGLE')
     @Override
     public ${entity} get${entity}ById(String sid)   {
-         return ${cfg.mapperObjectName}.get${entity}ById(sid);
+        ${entity} obj = ${cfg.mapperObjectName}.get${entity}ById(sid);
+        #foreach($field in ${table.fields})
+            #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+                ${entity} info = iterator.next();
+                    disposeObj(obj);
+                #break
+            #end
+        #end
+         return obj ;
     }
 
     #end
@@ -112,13 +120,10 @@ public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.en
         #break
         #end
     #end
-
-
         return new Paging<${entity}>(iPage);
-        }
+}
 private void disposeObj(${entity} obj) {
     #foreach($field in ${table.fields})
-        ${field}
         #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
             #set ($camelColumnName = ${field.propertyName})
             #set ($camelColumnName = $camelColumnName.substring(0,1).toUpperCase() + $camelColumnName.substring(1,$camelColumnName.length()))
@@ -126,7 +131,6 @@ private void disposeObj(${entity} obj) {
 
         #end
     #end
-
  }
 
 #end
