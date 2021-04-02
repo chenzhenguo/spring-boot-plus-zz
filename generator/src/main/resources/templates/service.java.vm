@@ -7,6 +7,9 @@ import ${cfg.pageParamClass};
 #if(${cfg.generatorQueryVo})
 import ${cfg.queryVoClass};
 #end
+import java.util.List;
+import com.zz.common.base.IBaseService;
+import com.zz.common.pagination.Paging;
 
 
 /**

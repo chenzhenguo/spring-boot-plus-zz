@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import ${cfg.validatorUpdatePackage};
 #end
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.zz.common.pagination.BasePageOrderParam;
 
 
 /**
@@ -38,8 +39,7 @@ public class ${entity}${cfg.pageParam} extends BasePageOrderParam {
 #else
 public class ${entity}${cfg.pageParam} extends BaseParam {
 #end
-    private static final long serialVersionUID = 1L;
-
+private static final long serialVersionUID = 1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
@@ -98,10 +98,9 @@ public class ${entity}${cfg.pageParam} extends BaseParam {
     #end
     #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
     @ApiModelProperty("${field.comment}-已查询字典")
+    @TableField(exist=false)
     private ${field.propertyType} ${field.propertyName}String;
     #end
-
-
 #end
     @ApiModelProperty("开始时间")
     private Date beginDate;

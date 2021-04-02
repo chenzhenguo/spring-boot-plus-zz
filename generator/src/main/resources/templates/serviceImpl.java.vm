@@ -28,6 +28,12 @@ import java.util.Iterator;
         #break
     #end
 #end
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import com.zz.common.base.BaseService;
+import com.zz.common.pagination.PageInfo;
+import com.zz.common.pagination.Paging;
 /**
  * $!{table.comment} 服务实现类
  *
@@ -90,8 +96,7 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
         ${entity} obj = ${cfg.mapperObjectName}.get${entity}ById(sid);
         #foreach($field in ${table.fields})
             #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
-                ${entity} info = iterator.next();
-                    disposeObj(obj);
+           disposeObj(obj);
                 #break
             #end
         #end
@@ -99,39 +104,39 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
     }
 
     #end
-@Override
-public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
-        Page<${entity}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getGxsj)));
-    #if(${cfg.generatorStrategy} != 'SINGLE')
-            IPage<${entity}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
-    #else
-            LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
-            IPage<${entity}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
-    #end
-
-
-    #foreach($field in ${table.fields})
-        #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
-                Iterator<${entity}> iterator = iPage.getRecords().iterator();
-                while (iterator.hasNext()){
-                 ${entity} info = iterator.next();
-                disposeObj(info);
-             }
-        #break
+    @Override
+    public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
+            Page<${entity}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getGxsj)));
+        #if(${cfg.generatorStrategy} != 'SINGLE')
+                IPage<${entity}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
+        #else
+                LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
+                IPage<${entity}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
         #end
-    #end
-        return new Paging<${entity}>(iPage);
-}
-private void disposeObj(${entity} obj) {
-    #foreach($field in ${table.fields})
-        #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
-            #set ($camelColumnName = ${field.propertyName})
-            #set ($camelColumnName = $camelColumnName.substring(0,1).toUpperCase() + $camelColumnName.substring(1,$camelColumnName.length()))
-            obj.set${camelColumnName}String(xtzdService.getXtzdValueByCodes(obj.get${camelColumnName}()));
 
+
+        #foreach($field in ${table.fields})
+            #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+                    Iterator<${entity}> iterator = iPage.getRecords().iterator();
+                    while (iterator.hasNext()){
+                     ${entity} info = iterator.next();
+                    disposeObj(info);
+                 }
+            #break
+            #end
         #end
-    #end
- }
+            return new Paging<${entity}>(iPage);
+    }
+    private void disposeObj(${entity} obj) {
+        #foreach($field in ${table.fields})
+            #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+                #set ($camelColumnName = ${field.propertyName})
+                #set ($camelColumnName = $camelColumnName.substring(0,1).toUpperCase() + $camelColumnName.substring(1,$camelColumnName.length()))
+                obj.set${camelColumnName}String(xtzdService.getXtzdValueByCodes(obj.get${camelColumnName}()));
 
-#end
+            #end
+        #end
+     }
+
+    #end
 }

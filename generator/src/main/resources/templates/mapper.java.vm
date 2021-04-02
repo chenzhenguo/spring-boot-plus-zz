@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import java.io.Serializable;
 #end
-import java.util.Date
 
 /**
  * $!{table.comment} Mapper 接口

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zz.project.provide.projectdeclare.mapper.ProjectFillInMapper">
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        sid,
+        djr,
+        djsj,
+        gxr,
+        gxsj,
+        scbj,
+        pxbj,
+        bz,
+        tzzd,
+        project_name, project_territory_type_dic_codes, recommend_department, apply_for_department, social_unified_credit_code, declare_content_attachment, project_leader, project_leader_phone, declare_id, project_attachment, release_status, declare_time, declare_status, release_time, to_meeting, project_type_dic_codes, declare_type_dic_codes, execute_time
+    </sql>
+
+    <select id="getProjectFillInById" resultType="com.zz.project.provide.projectdeclare.entity.ProjectFillIn">
+        select
+        <include refid="Base_Column_List"/>
+        from zz_project_fill_in where sid = #{id} and scbj=0
+    </select>
+
+    <select id="getProjectFillInPageList" parameterType="com.zz.project.provide.projectdeclare.param.ProjectFillInPageParam" resultType="com.zz.project.provide.projectdeclare.entity.ProjectFillIn">
+        select
+        <include refid="Base_Column_List"/>
+        from zz_project_fill_in
+
+
+<where>
+            1=1
+            and scbj = 0
+            <if test="param.beginDate != null and param.beginDate != ''">
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') &gt;= #{params.startTime}
+            </if>
+            <if test="param.endDate != null and param.endDate != ''">
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') <= #{params.endTime}
+            </if>
+            <if test="param.projectName != null       and param.projectName != ''">
+                and  project_name = #{param.projectName}
+            </if>
+            <if test="param.projectTerritoryTypeDicCodes != null       and param.projectTerritoryTypeDicCodes != ''">
+                and string_to_array(  project_territory_type_dic_codes , ',' ) @> ARRAY [ #{param.projectTerritoryTypeDicCodes} ]
+            </if>
+            <if test="param.recommendDepartment != null       and param.recommendDepartment != ''">
+                and  recommend_department = #{param.recommendDepartment}
+            </if>
+            <if test="param.applyForDepartment != null   ">
+                and  apply_for_department = #{param.applyForDepartment}
+            </if>
+            <if test="param.socialUnifiedCreditCode != null       and param.socialUnifiedCreditCode != ''">
+                and  social_unified_credit_code = #{param.socialUnifiedCreditCode}
+            </if>
+            <if test="param.declareContentAttachment != null       and param.declareContentAttachment != ''">
+                and  declare_content_attachment = #{param.declareContentAttachment}
+            </if>
+            <if test="param.projectLeader != null       and param.projectLeader != ''">
+                and  project_leader = #{param.projectLeader}
+            </if>
+            <if test="param.projectLeaderPhone != null       and param.projectLeaderPhone != ''">
+                and  project_leader_phone = #{param.projectLeaderPhone}
+            </if>
+            <if test="param.declareId != null   ">
+                and  declare_id = #{param.declareId}
+            </if>
+            <if test="param.projectAttachment != null       and param.projectAttachment != ''">
+                and  project_attachment = #{param.projectAttachment}
+            </if>
+            <if test="param.releaseStatus != null   ">
+                and  release_status = #{param.releaseStatus}
+            </if>
+            <if test="param.declareStatus != null   ">
+                and  declare_status = #{param.declareStatus}
+            </if>
+            <if test="param.toMeeting != null   ">
+                and  to_meeting = #{param.toMeeting}
+            </if>
+            <if test="param.projectTypeDicCodes != null       and param.projectTypeDicCodes != ''">
+                and string_to_array(  project_type_dic_codes , ',' ) @> ARRAY [ #{param.projectTypeDicCodes} ]
+            </if>
+            <if test="param.declareTypeDicCodes != null       and param.declareTypeDicCodes != ''">
+                and string_to_array(  declare_type_dic_codes , ',' ) @> ARRAY [ #{param.declareTypeDicCodes} ]
+            </if>
+</where>
+    </select>
+
+</mapper>

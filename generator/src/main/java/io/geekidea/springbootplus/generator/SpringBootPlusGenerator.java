@@ -52,13 +52,13 @@ public class SpringBootPlusGenerator {
         // 设置基本信息
         generatorProperties
                 .setMavenModuleName("example")
-                .setParentPackage("com.zz.project.provide.projectmanager")
+                .setParentPackage("com.zz.project.provide.projectdeclare")
                 .setAuthor("czg")
                 .setFileOverride(true);
         // 设置表信息
         generatorProperties
                 //.addTable("zz_experts_info","sid").addTable("zz_enterprise_info","sid");
-                .addTable("zz_project_fill_in","sid").addTable("zz_project_declare","sid");
+                .addTable("zz_project_fill_in","sid").addTable("zz_project_fill_in","sid");
         // 设置表前缀
          generatorProperties.setTablePrefix(Arrays.asList("zz_"));
 
