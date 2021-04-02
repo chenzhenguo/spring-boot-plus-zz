@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import ${cfg.validatorUpdatePackage};
 #end
+import com.baomidou.mybatisplus.annotation.TableField;
 
 /**
  * $!{table.comment}

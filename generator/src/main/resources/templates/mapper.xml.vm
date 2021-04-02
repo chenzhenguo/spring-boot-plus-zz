@@ -52,21 +52,22 @@
             1=1
             and scbj = 0
             <if test="param.beginDate != null and param.beginDate != ''">
-                and to_char( djsj, 'yyyy-mm-dd') >= #{params.startTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') &gt;= #{params.startTime}
             </if>
             <if test="param.endDate != null and param.endDate != ''">
-                and to_char( djsj , 'yyyy-mm-dd') <= #{params.endTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') <= #{params.endTime}
             </if>
-
         #foreach($field in ${table.fields})
-            #if( ${field.columnType} == 'STRING' ||  ${field.columnType} == 'DOUBLE' ||  ${field.columnType} == 'INTEGER'||  ${field.columnType} == 'LONG' )
-                <if test="param.${field.propertyName} != null   #if(${field.columnType} == 'STRING'  )    and param.${field.propertyName} != ''#end">
-                #if(${field.comment.indexOf("_like")} != -1)
-                    and  ${field.name} like '%' || #{param.${field.propertyName}} || '%'
-                #else
-                    and  ${field.name} = #{param.${field.propertyName}}
-                #end
-                </if>
+            #if( ${field.columnType} == 'STRING' ||  ${field.columnType} == 'DOUBLE' ||  ${field.columnType} == 'INTEGER'||  ${field.columnType} == 'LONG'  ||  ${field.columnType} == 'BIG_DECIMAL'   )
+            <if test="param.${field.propertyName} != null   #if(${field.columnType} == 'STRING'  )    and param.${field.propertyName} != ''#end">
+            #if(${field.name.indexOf(${cfg.docCodes})}  != -1)
+                and string_to_array(  ${field.name} , ',' ) @> ARRAY [ #{param.${field.propertyName}} ]
+            #elseif(${field.comment.indexOf("_like")} != -1)
+                and  ${field.name} like '%' || #{param.${field.propertyName}} || '%'
+            #else
+                and  ${field.name} = #{param.${field.propertyName}}
+            #end
+            </if>
               #end
          #end
 </where>

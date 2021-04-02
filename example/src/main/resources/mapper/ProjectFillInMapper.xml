@@ -33,38 +33,53 @@
             1=1
             and scbj = 0
             <if test="param.beginDate != null and param.beginDate != ''">
-                and to_char( djsj, 'yyyy-mm-dd') >= #{params.startTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') &gt;= #{params.startTime}
             </if>
             <if test="param.endDate != null and param.endDate != ''">
-                and to_char( djsj , 'yyyy-mm-dd') <= #{params.endTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') <= #{params.endTime}
             </if>
 
-                <if test="param.recommendDepartment != null       and param.recommendDepartment != ''     ">
+                <if test="param.projectName != null   ">
+                    and  project_name = #{param.projectName}
+                </if>
+                <if test="param.projectTerritory != null   ">
+                    and  project_territory = #{param.projectTerritory}
+                </if>
+                <if test="param.projectType != null   ">
+                    and  project_type = #{param.projectType}
+                </if>
+                <if test="param.recommendDepartment != null       and param.recommendDepartment != ''">
                     and  recommend_department = #{param.recommendDepartment}
                 </if>
-                <if test="param.applyForDepartment != null       and param.applyForDepartment != ''     ">
+                <if test="param.applyForDepartment != null       and param.applyForDepartment != ''">
                     and  apply_for_department = #{param.applyForDepartment}
                 </if>
-                <if test="param.socialUnifiedCreditCode != null       and param.socialUnifiedCreditCode != ''     ">
+                <if test="param.socialUnifiedCreditCode != null       and param.socialUnifiedCreditCode != ''">
                     and  social_unified_credit_code = #{param.socialUnifiedCreditCode}
                 </if>
-                <if test="param.declareContentAttachment != null       and param.declareContentAttachment != ''     ">
+                <if test="param.declareContentAttachment != null       and param.declareContentAttachment != ''">
                     and  declare_content_attachment = #{param.declareContentAttachment}
                 </if>
-                <if test="param.projectLeader != null       and param.projectLeader != ''     ">
+                <if test="param.projectLeader != null       and param.projectLeader != ''">
                     and  project_leader = #{param.projectLeader}
                 </if>
-                <if test="param.projectLeaderPhone != null       and param.projectLeaderPhone != ''     ">
+                <if test="param.projectLeaderPhone != null       and param.projectLeaderPhone != ''">
                     and  project_leader_phone = #{param.projectLeaderPhone}
                 </if>
-                <if test="param.projectAttachment != null       and param.projectAttachment != ''     ">
+                <if test="param.declareId != null   ">
+                    and  declare_id = #{param.declareId}
+                </if>
+                <if test="param.projectAttachment != null       and param.projectAttachment != ''">
                     and  project_attachment = #{param.projectAttachment}
                 </if>
-                <if test="param.releaseStatus != null    ">
+                <if test="param.releaseStatus != null   ">
                     and  release_status = #{param.releaseStatus}
                 </if>
-                <if test="param.declareStatus != null    ">
+                <if test="param.declareStatus != null   ">
                     and  declare_status = #{param.declareStatus}
+                </if>
+                <if test="param.toMeeting != null   ">
+                    and  to_meeting = #{param.toMeeting}
                 </if>
 </where>
     </select>

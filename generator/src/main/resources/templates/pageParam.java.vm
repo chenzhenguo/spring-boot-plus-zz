@@ -18,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import ${cfg.validatorUpdatePackage};
 #end
+import com.baomidou.mybatisplus.annotation.TableField;
 
 
 /**
@@ -100,6 +101,8 @@ public class ${entity}${cfg.pageParam} extends BaseParam {
     private ${field.propertyType} ${field.propertyName}String;
     #end
 
+
+#end
     @ApiModelProperty("开始时间")
     private Date beginDate;
 
@@ -108,5 +111,4 @@ public class ${entity}${cfg.pageParam} extends BaseParam {
 
     @ApiModelProperty("查询时间段字段")
     private String  timeColume="djsj";
-#end
 }

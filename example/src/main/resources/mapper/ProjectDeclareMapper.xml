@@ -33,22 +33,31 @@
             1=1
             and scbj = 0
             <if test="param.beginDate != null and param.beginDate != ''">
-                and to_char( djsj, 'yyyy-mm-dd') >= #{params.startTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') &gt;= #{params.startTime}
             </if>
             <if test="param.endDate != null and param.endDate != ''">
-                and to_char( djsj , 'yyyy-mm-dd') <= #{params.endTime}
+                and to_char( #{params.timeColume} , 'yyyy-mm-dd') <= #{params.endTime}
             </if>
 
-                <if test="param.projectTypel != null       and param.projectTypel != ''     ">
+                <if test="param.declareTypeDicCodes != null   ">
+                    and string_to_array(  declare_type_dic_codes , ',' ) @> ARRAY [ #{param.declareTypeDicCodes} ]
+                </if>
+                <if test="param.declareLevel != null   ">
+                    and  declare_level = #{param.declareLevel}
+                </if>
+                <if test="param.projectTypel != null       and param.projectTypel != ''">
                     and  project_typel = #{param.projectTypel}
                 </if>
-                <if test="param.declareTitle != null       and param.declareTitle != ''     ">
+                <if test="param.declareOnline != null   ">
+                    and  declare_online = #{param.declareOnline}
+                </if>
+                <if test="param.declareTitle != null       and param.declareTitle != ''">
                     and  declare_title = #{param.declareTitle}
                 </if>
-                <if test="param.declareContent != null       and param.declareContent != ''     ">
+                <if test="param.declareContent != null       and param.declareContent != ''">
                     and  declare_content like '%' || #{param.declareContent} || '%'
                 </if>
-                <if test="param.declareContentAttachment != null       and param.declareContentAttachment != ''     ">
+                <if test="param.declareContentAttachment != null       and param.declareContentAttachment != ''">
                     and  declare_content_attachment = #{param.declareContentAttachment}
                 </if>
 </where>

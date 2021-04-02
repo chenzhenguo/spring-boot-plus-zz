@@ -118,6 +118,7 @@ public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.en
         }
 private void disposeObj(${entity} obj) {
     #foreach($field in ${table.fields})
+        ${field}
         #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
             #set ($camelColumnName = ${field.propertyName})
             #set ($camelColumnName = $camelColumnName.substring(0,1).toUpperCase() + $camelColumnName.substring(1,$camelColumnName.length()))
