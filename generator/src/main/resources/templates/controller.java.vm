@@ -111,7 +111,7 @@ public class ${table.controllerName} {
      */
     @PostMapping("delBatch")
     #if(${cfg.operationLog})
-    @Log(modelName = "批量删除$!{table.comment}", action =Log.DELETE,description="批量删除除$!{table.comment}")
+    @Log(modelName = "批量删除$!{table.comment}", action =Log.DELETE,description="批量删除$!{table.comment}")
     #end
     @ApiOperation(value = "批量删除$!{table.comment}")
      public Boolean delBatch${entity}(@RequestParam(value="sids") List<String> sids ){
@@ -144,7 +144,7 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:page")
 #end
 #if(${cfg.operationLog})
-       @Log(modelName = "$!{table.comment}分页列表", action = Log.SELECT,description="分页查询查询$!{table.comment}")
+       @Log(modelName = "$!{table.comment}分页列表", action = Log.SELECT,description="分页查询$!{table.comment}")
 #end
     @ApiOperation(value = "$!{table.comment}分页列表", response = ${entity}.class)
     public Paging<${entity}> get${entity}PageList( ${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam})   {
