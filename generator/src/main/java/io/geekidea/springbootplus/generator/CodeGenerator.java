@@ -304,6 +304,7 @@ public class CodeGenerator {
                 map.put("swaggerTags", generatorConfig.isSwaggerTags());
                 map.put("operationLog", generatorConfig.isOperationLog());
                 map.put("module", moduleName);
+                map.put("docCodes",GeneratorConstant.DOC_CODES);
                 this.setMap(map);
             }
         };

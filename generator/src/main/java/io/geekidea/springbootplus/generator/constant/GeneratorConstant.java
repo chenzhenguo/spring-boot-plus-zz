@@ -136,4 +136,8 @@ public interface GeneratorConstant {
      * 分组验证Update.class类路径
      */
     String VALIDATOR_UPDATE_PACKAGE = "io.geekidea.springbootplus.framework.core.validator.groups.Update";
+
+
+    //_dic_codes   标识字段类型为存储的为 字典表的 枚举值，多个逗号隔开， 将自动生成  字典表翻译字段 和 查询语句
+     String DOC_CODES = "_dic_codes";
 }

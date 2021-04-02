@@ -27,6 +27,7 @@
 
 #end
 #if(${cfg.generatorStrategy} == 'ALL')
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
 #foreach($field in ${table.commonFields})
@@ -38,13 +39,37 @@
     <select id="get${entity}ById" resultType="${package.Entity}.${entity}">
         select
         <include refid="Base_Column_List"/>
-        from ${table.name} where ${cfg.pkIdName} = #{id}
+        from ${table.name} where ${cfg.pkIdName} = #{id} and scbj=0
     </select>
 
     <select id="get${entity}PageList" parameterType="${cfg.pageParamClass}" resultType="${package.Entity}.${entity}">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}
+
+
+<where>
+            1=1
+            and scbj = 0
+            <if test="param.beginDate != null and param.beginDate != ''">
+                and to_char( djsj, 'yyyy-mm-dd') >= #{params.startTime}
+            </if>
+            <if test="param.endDate != null and param.endDate != ''">
+                and to_char( djsj , 'yyyy-mm-dd') <= #{params.endTime}
+            </if>
+
+        #foreach($field in ${table.fields})
+            #if( ${field.columnType} == 'STRING' ||  ${field.columnType} == 'DOUBLE' ||  ${field.columnType} == 'INTEGER'||  ${field.columnType} == 'LONG' )
+                <if test="param.${field.propertyName} != null   #if(${field.columnType} == 'STRING'  )    and param.${field.propertyName} != ''#end">
+                #if(${field.comment.indexOf("_like")} != -1)
+                    and  ${field.name} like '%' || #{param.${field.propertyName}} || '%'
+                #else
+                    and  ${field.name} = #{param.${field.propertyName}}
+                #end
+                </if>
+              #end
+         #end
+</where>
     </select>
 
 #end

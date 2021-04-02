@@ -21,7 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
+#foreach($field in ${table.fields})
+    #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+import com.zz.project.provide.system.service.IBasicsXtzdService;
+import java.util.Iterator;
+        #break
+    #end
+#end
 /**
  * $!{table.comment} 服务实现类
  *
@@ -33,6 +39,16 @@ public class ${table.serviceImplName} extends BaseService<${table.mapperName}, $
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
+#foreach($field in ${table.fields})
+    #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+    @Resource
+    private IBasicsXtzdService xtzdService;
+        #break
+    #end
+#end
+
+
+
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 
     @Override
@@ -84,7 +100,33 @@ public Paging<${entity}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.en
             LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
             IPage<${entity}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
     #end
+
+
+    #foreach($field in ${table.fields})
+        #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+                Iterator<${entity}> iterator = iPage.getRecords().iterator();
+                while (iterator.hasNext()){
+                 ${entity} info = iterator.next();
+                disposeObj(info);
+             }
+        #break
+        #end
+    #end
+
+
         return new Paging<${entity}>(iPage);
         }
+private void disposeObj(${entity} obj) {
+    #foreach($field in ${table.fields})
+        #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+            #set ($camelColumnName = ${field.propertyName})
+            #set ($camelColumnName = $camelColumnName.substring(0,1).toUpperCase() + $camelColumnName.substring(1,$camelColumnName.length()))
+            obj.set${camelColumnName}String(xtzdService.getXtzdValueByCodes(obj.get${camelColumnName}()));
+
+        #end
+    #end
+
+ }
+
 #end
 }

@@ -45,15 +45,20 @@ public class SpringBootPlusGenerator {
      */
     public static void main(String[] args) {
         GeneratorProperties generatorProperties = new GeneratorProperties();
+//TODO 自动生成导包依赖
+// 字段类型 数据库设计为numeric java对应为double类型
+        //service 和 mapper 和ctroller 位置错误
 
         // 设置基本信息
         generatorProperties
                 .setMavenModuleName("example")
-                .setParentPackage("com.zz.project.provide.usermanager")
+                .setParentPackage("com.zz.project.provide.projectmanager")
                 .setAuthor("czg")
                 .setFileOverride(true);
         // 设置表信息
-        generatorProperties.addTable("zz_experts","sid");
+        generatorProperties
+                //.addTable("zz_experts_info","sid").addTable("zz_enterprise_info","sid");
+                .addTable("zz_project_fill_in","sid").addTable("zz_project_declare","sid");
         // 设置表前缀
          generatorProperties.setTablePrefix(Arrays.asList("zz_"));
 

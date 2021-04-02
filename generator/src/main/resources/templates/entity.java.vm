@@ -1,6 +1,8 @@
 package ${package.Entity};
 
-
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +37,7 @@ import ${cfg.validatorUpdatePackage};
 @TableName("${table.name}")
 #end
 #if(${swagger2})
-@ApiModel(value = "${entity}对象")
+@ApiModel(value = "${entity}实体对象")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
@@ -96,7 +98,18 @@ public class ${entity} implements Serializable {
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
 #end
+    #if(${field.propertyType} == 'BigDecimal')
+    private Integer ${field.propertyName};
+
+    #else
     private ${field.propertyType} ${field.propertyName};
 
+    #end
+    #if(  ${field.name.indexOf(${cfg.docCodes})} != -1)
+    @ApiModelProperty("${field.comment}-已查询字典")
+    @TableField(exist=false)
+    private ${field.propertyType} ${field.propertyName}String;
+
+    #end
 #end
 }
